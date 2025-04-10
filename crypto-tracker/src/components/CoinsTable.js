@@ -51,6 +51,13 @@ const CoinsTable = () => {
   const classes = useStyles();
   const navigate = useNavigate();
 
+  // Create a dark theme with white text
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+    },
+  });
+
   const fetchCoins = async () => {
     setLoading(true);
     const { data } = await axios.get(CoinList(currency));
@@ -71,11 +78,11 @@ const CoinsTable = () => {
   };
 
   return (
-    <ThemeProvider theme={createTheme()}>
+    <ThemeProvider theme={darkTheme}>
       <Container style={{ textAlign: "center" }}>
         <Typography
           variant="h4"
-          style={{ margin: 18, fontFamily: "Montserrat" }}
+          style={{ margin: 18, fontFamily: "Montserrat", color: "white" }}
         >
           Cryptocurrency Prices by Market Cap
         </Typography>
@@ -85,7 +92,7 @@ const CoinsTable = () => {
           style={{ marginBottom: 20, width: "100%" }}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} style={{ backgroundColor: "#16171a" }}>
           {loading ? (
             <LinearProgress style={{ backgroundColor: "gold" }} />
           ) : (
@@ -124,6 +131,7 @@ const CoinsTable = () => {
                           style={{
                             display: "flex",
                             gap: 15,
+                            color: "white",
                           }}
                         >
                           <img
@@ -139,16 +147,17 @@ const CoinsTable = () => {
                               style={{
                                 textTransform: "uppercase",
                                 fontSize: 22,
+                                color: "gold",
                               }}
                             >
                               {row.symbol}
                             </span>
-                            <span style={{ color: "darkgrey" }}>
+                            <span style={{ color: "white" }}>
                               {row.name}
                             </span>
                           </div>
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="right" style={{ color: "white" }}>
                           {symbol}{" "}
                           {numberWithCommas(row.current_price.toFixed(2))}
                         </TableCell>
@@ -162,7 +171,7 @@ const CoinsTable = () => {
                           {profit && "+"}
                           {row.price_change_percentage_24h.toFixed(2)}%
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="right" style={{ color: "white" }}>
                           {symbol}{" "}
                           {numberWithCommas(
                             row.market_cap.toString().slice(0, -6)
